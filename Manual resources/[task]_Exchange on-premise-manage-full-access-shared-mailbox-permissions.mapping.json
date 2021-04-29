@@ -1,0 +1,22 @@
+[
+    {
+        "name":  "mailboxAlias",
+        "value":  "{{form.gridMailbox.Alias}}"
+    },
+    {
+        "name":  "mailboxDn",
+        "value":  "{{form.gridMailbox.DistinguishedName}}"
+    },
+    {
+        "name":  "mailboxIdentity",
+        "value":  "{{form.gridMailbox.UserPrincipalName}}"
+    },
+    {
+        "name":  "usersToAddFullAccess",
+        "value":  "{{form.fullaccessList.leftToRight.toJsonString}}"
+    },
+    {
+        "name":  "usersToRemoveFullAccess",
+        "value":  "{{form.fullaccessList.rightToLeft.toJsonString}}"
+    }
+]
