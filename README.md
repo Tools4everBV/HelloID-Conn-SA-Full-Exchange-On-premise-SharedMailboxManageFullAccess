@@ -1,73 +1,101 @@
-| :warning: Important |
-|:---|
+| :warning: Important                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Best Practice:** Use **HelloID Products** for requesting and managing permissions (group memberships, mailbox access, application roles). Products provide governance, approval workflows, admin visibility, and full lifecycle management.<br>Use delegated forms for one-time operational actions (creating resources like shared mailboxes, password resets, attribute updates) only.<br><br>**[Read more: Products vs. Delegated Forms](https://docs.helloid.com/en/service-automation/products-vs--delegated-forms.html)** |
 
-
-| :information_source: Information |
-|:---|
+| :information_source: Information                                                                                                                                                                                                                                                                                                                                                          |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | This repository contains the connector and configuration code only. The implementer is responsible for acquiring the connection details such as username, password, certificate, etc. You might even need to sign a contract or agreement with the supplier before implementing this connector. Please contact the client's application manager to coordinate the connector requirements. |
 
-<!-- Description -->
 ## Description
-This HelloID Service Automation Delegated Form provides Exchange On-Premise shared mailbox functionality. The following options are available:
- 1. Search shared mailbox to manage
- 2. Select the shared mailbox to manage
- 3. Manage members of the shared mailbox who have full-access rights (Add/Remove)
- 4. Confirm the changes
- 
-## Versioning
-| Version | Description | Date |
-| - | - | - |
-| 1.0.2   | Added version number and updated code for SA-agent and auditlogging | 2022/08/24  |
-| 1.0.1   | Added version number and updated all-in-one script | 2021/11/16  |
-| 1.0.0   | Initial release | 2021/14/29 |
 
-<!-- TABLE OF CONTENTS -->
-## Table of Contents
-* [Description](#description)
-* [All-in-one PowerShell setup script](#all-in-one-powershell-setup-script)
-  * [Getting started](#getting-started)
-* [Post-setup configuration](#post-setup-configuration)
-* [Manual resources](#manual-resources)
+HelloID-Conn-SA-Full-Exchange-On-Premises-SharedMailbox-Manage-FullAccess-Permissions is a template designed for use with HelloID Service Automation (SA) Delegated Forms. It can be imported into HelloID and customized according to your requirements.
 
+This HelloID Service Automation Delegated Form provides Exchange On-Premises shared mailbox full access permission management functionality. The following options are available:
 
-## All-in-one PowerShell setup script
-The PowerShell script "createform.ps1" contains a complete PowerShell script using the HelloID API to create the complete Form including user defined variables, tasks and data sources.
+1.  Search for a shared mailbox to manage
+2.  Select the shared mailbox
+3.  Manage members who have full-access rights (Add/Remove)
+4.  Confirm the changes
+5.  Full access permissions are updated in Exchange On-Premises
+6.  Changes are logged for audit purposes
 
- _Please note that this script asumes none of the required resources do exists within HelloID. The script does not contain versioning or source control_
+## Getting started
 
+### Requirements
 
-### Getting started
-Please follow the documentation steps on [HelloID Docs](https://docs.helloid.com/hc/en-us/articles/360017556559-Service-automation-GitHub-resources) in order to setup and run the All-in one Powershell Script in your own environment.
+- **Exchange On-Premises PowerShell Module**:<br>
+  Access to Exchange On-Premises PowerShell remoting endpoint is required. Ensure the service account has appropriate permissions to manage mailbox permissions.
+- **Network Connectivity**:<br>
+  The HelloID agent or service must have network access to the Exchange On-Premises server PowerShell endpoint (typically http://servername/powershell).
 
- 
-## Post-setup configuration
-After the all-in-one PowerShell script has run and created all the required resources. The following items need to be configured according to your own environment
- 1. Update the following [user defined variables](https://docs.helloid.com/hc/en-us/articles/360014169933-How-to-Create-and-Manage-User-Defined-Variables)
-<table>
-  <tr><td><strong>Variable name</strong></td><td><strong>Example value</strong></td><td><strong>Description</strong></td></tr>
-  <tr><td>ExchangeConnectionUri</td><td>http://exchangeserver/powershell</td><td>Exchangeserver where distribution is created</td></tr>
-  <tr><td>ExchangeAdminUsername</td><td>domain/user</td><td>Exchangeserver admin account</td></tr>
-  <tr><td>ExchangeAdminPassword</td><td>********</td><td>Exchangeserver admin password</td></tr>
-</table>
+- **Service Account Permissions**:<br>
+  The service account must have sufficient permissions in Exchange to:
+  - Query shared mailboxes
+  - Query user mailboxes
+  - Manage mailbox permissions (Add-MailboxPermission, Remove-MailboxPermission)
 
-## Manual resources
-This Delegated Form uses the following resources in order to run
+### Connection settings
 
-### Powershell data source 'Exchange-sharedmailbox-generate-table-wildcard-fullaccess'
-This Powershell data source runs an Exchange query to search on provided searchterm.
+The following user-defined variables are used by the connector.
 
-### Powershell data source 'Exchange-sharedmailbox-generate-table-manage-permissions-fullaccess'
-This Powershell data source runs an Exchange query to get current members with fullaccess rights on the shared mailbox.
+| Setting               | Description                                 | Mandatory |
+| --------------------- | ------------------------------------------- | --------- |
+| ExchangeConnectionUri | The URI to the Exchange PowerShell endpoint | Yes       |
+| ExchangeAdminUsername | The username of the service account         | Yes       |
+| ExchangeAdminPassword | The password of the service account         | Yes       |
 
-### Powershell data source 'Exchange-user-generate-table-sharedmailbox-manage-memberships'
-This Powershell data source runs an Exchange query to list available mailusers.
+## Remarks
 
-### Delegated form task 'Exchange on-premise - Manage full access permissions shared mailbox'
-This delegated form task will update the fullaccess rights to the shared mailbox in Exchange.
+### Enhanced Error Handling and Logging
+
+- The updated version includes comprehensive error handling and structured audit logging for all operations.
+- All actions are logged with detailed information including action type, system, message, error status, and target identifiers for proper audit trails.
+
+### Improved Connection Management
+
+- Connection parameters have been enhanced with better session options and credential handling.
+- TLS 1.2 is enforced for secure connections.
+- Session configuration includes proper authentication settings and error handling.
+
+### Optimized Performance
+
+- Data sources now use property selection to limit memory usage and improve processing speed.
+- Only necessary properties are retrieved from Exchange, reducing overhead.
+
+### Enhanced Search Capabilities
+
+- Wildcard search has been improved to search across multiple mailbox properties (Name, SamAccountName, Alias, PrimarySmtpAddress).
+- Better filter handling for more accurate results.
+
+### Security Improvements
+
+- Password is now marked as secret in global variables.
+- Secure credential handling throughout all scripts.
+
+## Development resources
+
+### PowerShell Cmdlets
+
+The following Exchange PowerShell cmdlets are used by the connector:
+
+| Cmdlet                   | Description                                   |
+| ------------------------ | --------------------------------------------- |
+| Get-Mailbox              | Retrieve mailbox information                  |
+| Add-MailboxPermission    | Add full access permissions to a mailbox      |
+| Remove-MailboxPermission | Remove full access permissions from a mailbox |
+
+### API documentation
+
+For more information about Exchange On-Premises PowerShell, please refer to:
+
+- [Connect to Exchange servers using remote PowerShell](https://learn.microsoft.com/en-us/powershell/exchange/connect-to-exchange-servers-using-remote-powershell)
+- [Exchange Server PowerShell (Exchange Management Shell)](https://learn.microsoft.com/en-us/powershell/exchange/exchange-management-shell)
 
 ## Getting help
-_If you need help, feel free to ask questions on our [forum](https://forum.helloid.com/forum/helloid-connectors/service-automation/571-helloid-sa-exchange-on-premises-manage-members-with-full-access-to-shared-mailbox)_
 
-## HelloID Docs
+> :bulb: **Tip:**  
+> _For more information on Delegated Forms, please refer to our [documentation](https://docs.helloid.com/en/service-automation/delegated-forms.html) pages_.
+
+## HelloID docs
+
 The official HelloID documentation can be found at: https://docs.helloid.com/
