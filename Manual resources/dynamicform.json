@@ -1,15 +1,15 @@
 [
     {
-        "label":  "Details",
+        "label":  "Search Sharedmailbox",
         "fields":  [
                        {
                            "key":  "searchMailbox",
                            "templateOptions":  {
-                                                   "label":  "Search",
+                                                   "label":  "Search Sharedmailbox",
                                                    "placeholder":  ""
                                                },
                            "type":  "input",
-                           "summaryVisibility":  "Hide element",
+                           "summaryVisibility":  "Show",
                            "requiresTemplateOptions":  true,
                            "requiresKey":  true,
                            "requiresDataSource":  false
@@ -17,21 +17,29 @@
                        {
                            "key":  "gridMailbox",
                            "templateOptions":  {
-                                                   "label":  "Mailbox",
+                                                   "label":  "Select Sharedmailbox",
                                                    "required":  true,
                                                    "grid":  {
                                                                 "columns":  [
                                                                                 {
                                                                                     "headerName":  "Display Name",
-                                                                                    "field":  "displayName"
+                                                                                    "field":  "DisplayName"
+                                                                                },
+                                                                                {
+                                                                                    "headerName":  "Primary Smtp Address",
+                                                                                    "field":  "PrimarySmtpAddress"
+                                                                                },
+                                                                                {
+                                                                                    "headerName":  "Email Addresses",
+                                                                                    "field":  "EmailAddresses"
                                                                                 },
                                                                                 {
                                                                                     "headerName":  "Alias",
                                                                                     "field":  "Alias"
                                                                                 },
                                                                                 {
-                                                                                    "headerName":  "User Principal Name",
-                                                                                    "field":  "UserPrincipalName"
+                                                                                    "headerName":  "Recipient Type Details",
+                                                                                    "field":  "RecipientTypeDetails"
                                                                                 }
                                                                             ],
                                                                 "height":  300,
@@ -42,7 +50,7 @@
                                                                             "input":  {
                                                                                           "propertyInputs":  [
                                                                                                                  {
-                                                                                                                     "propertyName":  "searchMailbox",
+                                                                                                                     "propertyName":  "searchValue",
                                                                                                                      "otherFieldValue":  {
                                                                                                                                              "otherFieldKey":  "searchMailbox"
                                                                                                                                          }
@@ -50,7 +58,9 @@
                                                                                                              ]
                                                                                       }
                                                                         },
-                                                   "useDefault":  false
+                                                   "useDefault":  false,
+                                                   "allowCsvDownload":  true,
+                                                   "useFilter":  true
                                                },
                            "type":  "grid",
                            "summaryVisibility":  "Show",
@@ -66,7 +76,7 @@
                        {
                            "key":  "fullaccessList",
                            "templateOptions":  {
-                                                   "label":  "Full Access permissions",
+                                                   "label":  "User(s) to manage full access permission",
                                                    "required":  false,
                                                    "filterable":  true,
                                                    "useDataSource":  true,
@@ -85,8 +95,8 @@
                                                                                         "Name":  "Orange"
                                                                                     }
                                                                                 ],
-                                                                    "optionKeyProperty":  "sAMAccountName",
-                                                                    "optionDisplayProperty":  "name"
+                                                                    "optionKeyProperty":  "SamAccountName",
+                                                                    "optionDisplayProperty":  "Name"
                                                                 },
                                                    "dataSourceConfig":  {
                                                                             "dataSourceGuid":  "$dataSourceGuid_1",
